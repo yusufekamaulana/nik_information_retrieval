@@ -64,17 +64,60 @@
           <div class="col-lg-6 order-1 order-lg-2 hero-img">
             <img src="{{ url_for('static', filename='img/hero-img.png') }}" class="img-fluid animated" alt="">
           </div>
-
         </div>
-      </div>
+      </div><br>
+    </section><!-- /Hero Section --><br>
 
-    </section><!-- /Hero Section -->
+    <div class="fyi">
+      <h4 class="judul">Kamu Perlu Tahu!</h4>
+      <table class="tableFYI">
+          <thead>
+              <tr>
+                  <p>Ini cara baca NIK kamu!</p>
+                  <p>Contoh NIK <b>3576014403910003</b></p>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+                  <td>35</td>
+                  <td>Kode Provinsi</td>
+              </tr>
+              <tr>
+                  <td>76</td>
+                  <td>Kode Kota/Kabupaten</td>
+              </tr>
+              <tr>
+                  <td>01</td>
+                  <td>Kode Kecamatan, setiap kecamatan memiliki kode yang berbeda</td>
+              </tr>
+              <tr>
+                  <td>44</td>
+                  <td>
+                      Tanggal lahir. Kode untuk laki-laki: 01-31. <br>
+                      Kode untuk perempuan: tanggal lahir + 40 (misal: 12 menjadi 52)
+                  </td>
+              </tr>
+              <tr>
+                  <td>03</td>
+                  <td>Bulan lahir (01 untuk Januari hingga 12 untuk Desember)</td>
+              </tr>
+              <tr>
+                  <td>91</td>
+                  <td>Tahun lahir (dua digit terakhir)</td>
+              </tr>
+              <tr>
+                  <td>0003</td>
+                  <td>Nomor urut pendaftaran penduduk berdasarkan tanggal lahir</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
 
     
     <section id="services" class="service-section">
         <div class="container">
             <form method="POST" class="nik-form">
-                <input type="text" name="nik" placeholder="Masukkan NIK" required>
+                <input type="text" name="nik" placeholder="Masukkan NIK (pastikan terdiri dari 16 digit agar hasilnya muncul)" required>
                 <button type="submit" class="btn-get-started">Submit</button>
             </form>
 

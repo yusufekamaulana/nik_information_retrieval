@@ -21,9 +21,9 @@ def identifikasi_wilayah(kode_provinsi, kode_kota, kode_kecamatan, df_wilayah):
     kota_row = df_wilayah[df_wilayah['Kode'] == kode_kota]
     kecamatan_row = df_wilayah[df_wilayah['Kode'] == kode_kecamatan]
 
-    nama_provinsi = provinsi_row['Nama'].values[0] if not provinsi_row.empty else "Format NIK tidak valid."
-    nama_kota = kota_row['Nama'].values[0] if not kota_row.empty else "Format NIK tidak valid."
-    nama_kecamatan = kecamatan_row['Nama'].values[0] if not kecamatan_row.empty else "Format NIK tidak valid."
+    nama_provinsi = provinsi_row['Nama'].values[0] if not provinsi_row.empty else "Provinsi tidak ditemukan. Mohon isi dengan kode yang benar"
+    nama_kota = kota_row['Nama'].values[0] if not kota_row.empty else "Kabupaten/Kota tidak ditemukan. Mohon isi dengan kode yang benar"
+    nama_kecamatan = kecamatan_row['Nama'].values[0] if not kecamatan_row.empty else "Kecamatan tidak ditemukan. Mohon isi dengan kode yang benar"
 
     return nama_provinsi, nama_kota, nama_kecamatan
 
@@ -37,16 +37,8 @@ def identifikasi_nik(nik, df_wilayah):
         kode_kota = f"{kode_provinsi}.{match.group('kode_kota')}"
         kode_kecamatan = f"{kode_kota}.{match.group('kode_kecamatan')}"
 
-        provinsi_row = df_wilayah[df_wilayah['Kode'] == kode_provinsi]
-        if provinsi_row.empty:
-            return "Format NIK tidak valid: Kode provinsi tidak ditemukan."
-
-        bulan = match.group('bulan')
-        if not (1 <= int(bulan) <= 12):
-            return "Format NIK tidak valid: Bulan tidak ada."
-
         nama_provinsi, nama_kota, nama_kecamatan = identifikasi_wilayah(kode_provinsi, kode_kota, kode_kecamatan, df_wilayah)
-
+        
         tanggal = int(match.group('tanggal'))
         tahun = int(match.group('tahun'))
 
@@ -56,12 +48,13 @@ def identifikasi_nik(nik, df_wilayah):
         else:
             jenis_kelamin = 'Laki-laki'
 
+        bulan = match.group('bulan')
         tahun_lahir = tahun + 2000 if tahun <= 25 else tahun + 1900
-        tanggal_lahir = f"{tanggal:02d}-{bulan}-{tahun_lahir}"
+        tanggal_lahir = "Tanggal lahir tidak valid" if not (1 <= int(bulan) <= 12) else f"{tanggal:02d}-{bulan}-{tahun_lahir}"
 
-        umur = hitung_umur(tanggal_lahir)
+        umur = "Tidak dapat dihitung. Pastikan memasukkan bulan yang benar" if not (1 <= int(bulan) <= 12) else hitung_umur(tanggal_lahir)
 
-        hasil = {
+        hasil = None if len(nik)>16 else {
             "NIK": nik,
             "Provinsi": nama_provinsi,
             "Kota/Kabupaten": nama_kota,
